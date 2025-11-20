@@ -4,9 +4,13 @@ import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {useRouter} from 'next/router';
 import {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {login} from '../../reducers/user';
 
 export function AuthInComponent() {
+	const dispatch = useDispatch();
 	const router = useRouter();
+
 	const [signInUsername, setSignInUsername] = useState('');
 	const [signInPassword, setSignInPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
@@ -20,7 +24,7 @@ export function AuthInComponent() {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.result) {
-					dispatch(login({username: signInUsername, token: data.token}));
+					dispatch(login({username: signInUsername, token: data.userData.token}));
 
 					setSignInUsername('');
 					setSignInPassword('');

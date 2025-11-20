@@ -4,8 +4,11 @@ import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {useRouter} from 'next/router';
 import {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {login} from '../../reducers/user';
 
 export function AuthUpComponent() {
+	const dispatch = useDispatch();
 	const router = useRouter();
 	const [errorMessage, setErrorMessage] = useState('');
 	const [signUpName, setSignUpName] = useState('');
@@ -21,7 +24,7 @@ export function AuthUpComponent() {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.result) {
-					dispatch(login({username: signUpUsername, token: data.token}));
+					dispatch(login({username: signUpUsername, token: data.userData.token}));
 
 					setSignUpName('');
 					setSignUpUsername('');
@@ -42,7 +45,7 @@ export function AuthUpComponent() {
 		<Dialog>
 			<form>
 				<DialogTrigger asChild>
-					<Button variant="outline">Créer compte</Button>
+					<Button variant="outline">Créer un compte</Button>
 				</DialogTrigger>
 				<DialogContent className="sm:max-w-[425px]">
 					<DialogHeader>
