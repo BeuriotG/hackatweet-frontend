@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import DisplayTweet from './DisplayTweet';
 import MakeTweet from './MakeTweet';
@@ -9,27 +10,25 @@ import UserCard from './UserCard';
 
 function LandingPage() {
 	const user = useSelector((state) => state.user.value);
+	const [tweetsData, setTweetsData] = useState([]);
 
-	const data = [
-		{
-			firstname: 'Gui',
-			username: '@Guilebg',
-			hours: 5,
-			tweet: "Aujourd'hui j'ai vu un chien déguisé en Père Noël",
-			nbOfLikes: 1,
-		},
-		{
-			firstname: 'JB',
-			username: '@Jblechauve',
-			hours: 2,
-			tweet: "C'était le mien haha",
-			nbOfLikes: 0,
-		},
-	];
+	const fetchAllTweet = () => {
+		fetch('http://localhost:3000/tweets')
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data.data);
+				setTweetsData(data.data);
+			});
+	};
 
-	const displayTweets = data.map((t, i) => {
-		return <DisplayTweet key={i} {...t} />;
+	useEffect(() => {
+		fetchAllTweet();
+	}, []);
+
+	const displayTweets = tweetsData.map((data, i) => {
+		return <DisplayTweet _id={data._id} key={i} firstname={data.author.firstname} username={data.author.username} hours={data.date} tweet={data.message} nbOfLikes={data.nbOfLikes} />;
 	});
+
 	return (
 		<main className="pa-0 inline-grid h-screen w-full grid-cols-4 bg-[#15202b]">
 			<div className="flex h-full w-full flex-col justify-between border-e p-2">
@@ -38,7 +37,7 @@ function LandingPage() {
 			</div>
 			<div className="col-span-2 flex h-full w-full flex-col">
 				<div className="flex h-full w-full flex-col">
-					<MakeTweet />
+					<MakeTweet fetchAllTweet={fetchAllTweet} />
 					{displayTweets}
 				</div>
 			</div>
