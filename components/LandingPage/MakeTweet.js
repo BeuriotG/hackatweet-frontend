@@ -40,7 +40,7 @@ export default function MakeTweet(props) {
 	};
 
 	return (
-		<Card className="mb-14 mt-[54] h-1/4 w-full rounded-xl border border-teal-300 bg-gradient-to-tl from-gray-50 to-teal-50 hover:border-teal-500">
+		<Card className="mb-14 mt-[54px] h-1/4 w-full rounded-xl border border-teal-300 bg-gradient-to-tl from-gray-50 to-teal-50 hover:border-teal-500">
 			<CardHeader>
 				<CardTitle className="text-xl tracking-tight">Home</CardTitle>
 			</CardHeader>

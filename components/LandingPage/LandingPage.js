@@ -55,7 +55,7 @@ function LandingPage() {
 					<div className="flex flex-col gap-4">{displayTweets}</div>
 				</div>
 			</div>
-			<div className="sticky top-[54] mt-[54] flex h-[80vh] w-1/4 flex-col justify-start gap-2 px-4">
+			<div className="sticky top-[54px] mt-[54px] flex h-[80vh] w-1/4 flex-col justify-start gap-2 px-4">
 				<TrendsList />
 			</div>
 			{/* </div> */}
