@@ -8,7 +8,7 @@ export function DisplayTweet(props) {
 	const user = useSelector((state) => state.user.value);
 	// console.log(props.canRemove);
 	const deleteTweet = () => {
-		console.log(props);
+		// console.log(props);
 		fetch('http://localhost:3000/tweets', {
 			method: 'DELETE',
 			headers: {'Content-Type': 'application/json'},
@@ -17,7 +17,7 @@ export function DisplayTweet(props) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.result) {
-					console.log(data);
+					// console.log(data);
 				}
 			});
 	};

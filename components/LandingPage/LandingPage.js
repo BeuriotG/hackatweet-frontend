@@ -10,21 +10,15 @@ import UserCard from './UserCard';
 
 function LandingPage() {
 	const user = useSelector((state) => state.user.value);
-	// console.log();
+
 	const [tweetsData, setTweetsData] = useState([]);
-	const [canRemove, setCanRemove] = useState(false);
+	// const [canRemove, setCanRemove] = useState(false);
 
 	const fetchAllTweet = () => {
 		fetch('http://localhost:3000/tweets')
 			.then((response) => response.json())
 			.then((data) => {
 				setTweetsData(data.data);
-				for (let t of data.data) {
-					if (user.token === t.author.token) {
-						console.log('can remove :', t.message);
-						setCanRemove(true);
-					}
-				}
 			});
 	};
 
@@ -33,6 +27,11 @@ function LandingPage() {
 	}, []);
 
 	const displayTweets = tweetsData.map((data, i) => {
+		let canRemove = false;
+		if (user.token === data.author.token) {
+			canRemove = true;
+		}
+
 		return <DisplayTweet _id={data._id} key={i} firstname={data.author.firstname} username={data.author.username} hours={data.date} tweet={data.message} nbOfLikes={data.nbOfLikes} canRemove={canRemove} />;
 	});
 
@@ -49,7 +48,7 @@ function LandingPage() {
 					<div className="flex flex-col-reverse gap-4">{displayTweets}</div>
 				</div>
 			</div>
-			<div className="sticky top-0 flex h-[94vh] w-1/4 flex-col justify-start gap-2 px-2 pt-[6vh]">
+			<div className="sticky top-[54] mt-[54] flex h-[80vh] w-1/4 flex-col justify-start gap-2 px-2">
 				<TrendsList />
 			</div>
 			{/* </div> */}
