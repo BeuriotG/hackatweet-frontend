@@ -6,9 +6,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export function DisplayTweet(props) {
 	const user = useSelector((state) => state.user.value);
-	// console.log(props.canRemove);
+
+	console.log(props._id);
+
+	const fetchAllTweets = () => {
+		props.fetchAllTweet();
+	};
+
 	const deleteTweet = () => {
-		// console.log(props);
 		fetch('http://localhost:3000/tweets', {
 			method: 'DELETE',
 			headers: {'Content-Type': 'application/json'},
@@ -17,7 +22,21 @@ export function DisplayTweet(props) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.result) {
-					// console.log(data);
+					fetchAllTweets();
+				}
+			});
+	};
+
+	const likeTweet = () => {
+		fetch('http://localhost:3000/tweets/like', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({tweetId: props._id}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.result) {
+					fetchAllTweets();
 				}
 			});
 	};
@@ -32,7 +51,7 @@ export function DisplayTweet(props) {
 			</CardHeader>
 			<CardContent>{props.tweet}</CardContent>
 			<CardFooter>
-				<FontAwesomeIcon className="cursor-pointer transition-colors duration-200 hover:text-teal-300" icon={faHeart} /> {props.nbOfLikes}
+				<FontAwesomeIcon className="cursor-pointer transition-colors duration-200 hover:text-teal-300" icon={faHeart} onClick={() => likeTweet()} /> {props.nbOfLikes}
 			</CardFooter>
 		</Card>
 	);

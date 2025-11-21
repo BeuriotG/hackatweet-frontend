@@ -12,7 +12,6 @@ function LandingPage() {
 	const user = useSelector((state) => state.user.value);
 
 	const [tweetsData, setTweetsData] = useState([]);
-	// const [canRemove, setCanRemove] = useState(false);
 
 	const fetchAllTweet = () => {
 		fetch('http://localhost:3000/tweets')
@@ -32,7 +31,12 @@ function LandingPage() {
 			canRemove = true;
 		}
 
-		return <DisplayTweet _id={data._id} key={i} firstname={data.author.firstname} username={data.author.username} hours={data.date} tweet={data.message} nbOfLikes={data.nbOfLikes} canRemove={canRemove} />;
+		let alreadyLiked = false;
+		if (user.token === data.author.token) {
+			alreadyLiked = true;
+		}
+
+		return <DisplayTweet _id={data._id} key={i} firstname={data.author.firstname} username={data.author.username} hours={data.date} tweet={data.message} nbOfLikes={data.nbOfLikes} canRemove={canRemove} alreadyLikd={alreadyLiked} fetchAllTweet={fetchAllTweet} />;
 	});
 
 	return (
