@@ -31,16 +31,19 @@ function LandingPage() {
 			canRemove = true;
 		}
 
+		// console.log('data', data.nbOfLikes);
 		let alreadyLiked = false;
-		if (user.token === data.author.token) {
+
+		// if (user.token === data.nbOfLikes) {
+		if (data.nbOfLikes.find((e) => e === user.token)) {
 			alreadyLiked = true;
 		}
 
-		return <DisplayTweet _id={data._id} key={i} firstname={data.author.firstname} username={data.author.username} hours={data.date} tweet={data.message} nbOfLikes={data.nbOfLikes} canRemove={canRemove} alreadyLikd={alreadyLiked} fetchAllTweet={fetchAllTweet} />;
+		return <DisplayTweet _id={data._id} key={i} firstname={data.author.firstname} username={data.author.username} hours={data.date} tweet={data.message} nbOfLikes={data.nbOfLikes.length} canRemove={canRemove} alreadyLiked={alreadyLiked} fetchAllTweet={fetchAllTweet} />;
 	});
 
 	return (
-		<main className="relative flex min-h-screen gap-4 bg-gradient-to-tr from-pink-50 to-gray-50 font-sans">
+		<main className="relative flex min-h-screen bg-gradient-to-tr from-pink-50 to-gray-50 font-sans">
 			<div className="sticky top-0 flex h-screen w-1/4 flex-col justify-between p-2">
 				<FontAwesomeIcon icon={faTwitter} rotation={180} size="2xl" className="ms-4 text-black" />
 				<UserCard username={user.username} />
@@ -49,10 +52,10 @@ function LandingPage() {
 			<div className="flex w-2/4 flex-col">
 				<div className="flex flex-col">
 					<MakeTweet fetchAllTweet={fetchAllTweet} />
-					<div className="flex flex-col-reverse gap-4">{displayTweets}</div>
+					<div className="flex flex-col gap-4">{displayTweets}</div>
 				</div>
 			</div>
-			<div className="sticky top-[54] mt-[54] flex h-[80vh] w-1/4 flex-col justify-start gap-2 px-2">
+			<div className="sticky top-[54] mt-[54] flex h-[80vh] w-1/4 flex-col justify-start gap-2 px-4">
 				<TrendsList />
 			</div>
 			{/* </div> */}

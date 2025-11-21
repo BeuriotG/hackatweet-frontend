@@ -10,7 +10,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 export function DisplayTweet(props) {
 	const user = useSelector((state) => state.user.value);
 
-	console.log(props._id);
+	// console.log(props._id);
 
 	const fetchAllTweets = () => {
 		props.fetchAllTweet();
@@ -34,11 +34,11 @@ export function DisplayTweet(props) {
 		fetch('http://localhost:3000/tweets/like', {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({tweetId: props._id}),
+			body: JSON.stringify({tweetId: props._id, token: user.token}),
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				if (data.result) {
+				if (data) {
 					fetchAllTweets();
 				}
 			});
@@ -54,8 +54,8 @@ export function DisplayTweet(props) {
 					<Dialog>
 						<form>
 							<DialogTrigger asChild>
-								<Button variant="ghost">
-									<FontAwesomeIcon className="cursor-pointer text-red-600 transition-colors duration-200 hover:text-red-400" icon={faTrashCan} />
+								<Button variant="ghost" className="text-red-600 transition-colors duration-200 hover:bg-transparent hover:text-red-400">
+									<FontAwesomeIcon className="" icon={faTrashCan} />
 								</Button>
 							</DialogTrigger>
 							<DialogContent className="sm:max-w-[425px]">
@@ -78,7 +78,7 @@ export function DisplayTweet(props) {
 			</CardHeader>
 			<CardContent>{props.tweet}</CardContent>
 			<CardFooter>
-				<FontAwesomeIcon className="cursor-pointer transition-colors duration-200 hover:text-teal-300" icon={faHeart} onClick={() => likeTweet()} /> {props.nbOfLikes}
+				<FontAwesomeIcon className={`${props.alreadyLiked ? 'text-red-500 hover:text-gray-800' : ''} cursor-pointer text-black transition-colors duration-200 hover:text-red-200`} icon={faHeart} onClick={() => likeTweet()} /> {props.nbOfLikes}
 			</CardFooter>
 		</Card>
 	);
