@@ -1,6 +1,9 @@
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from '@/components/ui/card.tsx';
 import {useSelector} from 'react-redux';
 
+import {Button} from '@/components/ui/button';
+import {Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+
 import {faHeart, faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -43,11 +46,35 @@ export function DisplayTweet(props) {
 
 	return (
 		<Card className="h-[200px] w-full rounded-xl border border-teal-300 bg-gray-400 bg-gradient-to-bl from-pink-50 to-gray-50 hover:border-teal-500">
-			<CardHeader className="flex flex-row justify-between">
+			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle className="align-center">
 					{props.firstname} @{props.username} <span className="text-sm font-extralight text-gray-400">{props.hours}</span>
 				</CardTitle>
-				{props.canRemove && <FontAwesomeIcon className="cursor-pointer text-red-600 transition-colors duration-200 hover:text-red-400" icon={faTrashCan} onClick={() => deleteTweet()} />}
+				{props.canRemove && (
+					<Dialog>
+						<form>
+							<DialogTrigger asChild>
+								<Button variant="ghost">
+									<FontAwesomeIcon className="cursor-pointer text-red-600 transition-colors duration-200 hover:text-red-400" icon={faTrashCan} />
+								</Button>
+							</DialogTrigger>
+							<DialogContent className="sm:max-w-[425px]">
+								<DialogHeader>
+									<DialogTitle>Voulez vous supprimer ?</DialogTitle>
+								</DialogHeader>
+
+								<DialogFooter>
+									<DialogClose asChild>
+										<Button variant="outline">Non</Button>
+									</DialogClose>
+									<Button type="submit" variant="destructive" onClick={() => deleteTweet()}>
+										Oui
+									</Button>
+								</DialogFooter>
+							</DialogContent>
+						</form>
+					</Dialog>
+				)}
 			</CardHeader>
 			<CardContent>{props.tweet}</CardContent>
 			<CardFooter>
