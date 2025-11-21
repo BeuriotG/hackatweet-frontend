@@ -15,7 +15,7 @@ export default function TrendsList() {
 		fetch('http://localhost:3000/tweets')
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
+				// console.log(data);
 				setDatatrends(data.uniqueHashtagsArray);
 			});
 	}, []);
@@ -24,7 +24,7 @@ export default function TrendsList() {
 
 	const displaydatatrends = datatrends.map((d, i) => {
 		return (
-			<div key={i} className="flex flex-col p-2">
+			<div key={i} className="mb-1 flex flex-col px-2">
 				<span className="italic text-blue-500">{d}</span>
 				{/* <span>{d} Tweets</span> */}
 			</div>
