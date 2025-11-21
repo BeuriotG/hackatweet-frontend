@@ -37,6 +37,12 @@ export function AuthInComponent() {
 			});
 	};
 
+	const onKeyPressHandler = (e) => {
+		if (e.key === 'Enter') {
+			handleConnection();
+		}
+	};
+
 	// -------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------
@@ -58,7 +64,7 @@ export function AuthInComponent() {
 						</div>
 						<div className="grid gap-3">
 							<Label htmlFor="setSignInPassword">Password</Label>
-							<Input id="setSignInPassword" type="password" name="password" onChange={(e) => setSignInPassword(e.target.value)} />
+							<Input id="setSignInPassword" type="password" name="password" onChange={(e) => setSignInPassword(e.target.value)} onKeyDown={onKeyPressHandler} />
 						</div>
 					</div>
 					<DialogFooter>

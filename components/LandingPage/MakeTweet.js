@@ -1,8 +1,8 @@
-import {useState} from 'react';
-import {useSelector} from 'react-redux';
 import {Button} from '@/components/ui/button.tsx';
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from '@/components/ui/card.tsx';
 import {Input} from '@/components/ui/input.tsx';
+import {useState} from 'react';
+import {useSelector} from 'react-redux';
 
 export default function MakeTweet(props) {
 	const [inputTweet, setInputTweet] = useState('');
@@ -11,6 +11,7 @@ export default function MakeTweet(props) {
 	const fetchAllTweets = () => {
 		props.fetchAllTweet();
 	};
+
 	const handleClick = async () => {
 		try {
 			const response = await fetch('http://localhost:3000/tweets/', {
@@ -24,7 +25,7 @@ export default function MakeTweet(props) {
 			if (!data.result) {
 				console.error(data.error);
 			} else {
-				console.log('done');
+				// console.log('done');
 				fetchAllTweets();
 			}
 		} catch (err) {
@@ -32,18 +33,23 @@ export default function MakeTweet(props) {
 		}
 		setInputTweet('');
 	};
+	const onKeyPressHandler = (e) => {
+		if (e.key === 'Enter') {
+			handleClick();
+		}
+	};
 
 	return (
-		<Card className="h-1/4 w-full rounded-none bg-inherit text-white">
+		<Card className="my-14 h-1/4 w-full rounded-xl border border-teal-300 bg-gradient-to-tl from-gray-50 to-teal-50 hover:border-teal-500">
 			<CardHeader>
-				<CardTitle>Home</CardTitle>
+				<CardTitle className="text-xl tracking-tight">Home</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<Input type="text" placeholder="What's up?" maxLength={280} value={inputTweet} onChange={(e) => setInputTweet(e.target.value)} />
+				<Input type="text" placeholder="What's up?" className="" maxLength={280} value={inputTweet} onChange={(e) => setInputTweet(e.target.value)} onKeyDown={onKeyPressHandler} />
 			</CardContent>
 			<CardFooter className="flex justify-end gap-x-4">
 				<span>{inputTweet.length} / 280</span>
-				<Button variant="secondary" className="bg-sky-400" onClick={() => handleClick()}>
+				<Button variant="default" className="" onClick={() => handleClick()}>
 					Tweet
 				</Button>
 			</CardFooter>

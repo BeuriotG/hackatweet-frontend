@@ -10,14 +10,21 @@ import UserCard from './UserCard';
 
 function LandingPage() {
 	const user = useSelector((state) => state.user.value);
+	// console.log();
 	const [tweetsData, setTweetsData] = useState([]);
+	const [canRemove, setCanRemove] = useState(false);
 
 	const fetchAllTweet = () => {
 		fetch('http://localhost:3000/tweets')
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data.data);
 				setTweetsData(data.data);
+				for (let t of data.data) {
+					if (user.token === t.author.token) {
+						console.log('can remove :', t.message);
+						setCanRemove(true);
+					}
+				}
 			});
 	};
 
@@ -26,25 +33,26 @@ function LandingPage() {
 	}, []);
 
 	const displayTweets = tweetsData.map((data, i) => {
-		return <DisplayTweet _id={data._id} key={i} firstname={data.author.firstname} username={data.author.username} hours={data.date} tweet={data.message} nbOfLikes={data.nbOfLikes} />;
+		return <DisplayTweet _id={data._id} key={i} firstname={data.author.firstname} username={data.author.username} hours={data.date} tweet={data.message} nbOfLikes={data.nbOfLikes} canRemove={canRemove} />;
 	});
 
 	return (
-		<main className="pa-0 inline-grid h-screen w-full grid-cols-4 bg-[#15202b]">
-			<div className="flex h-full w-full flex-col justify-between border-e p-2">
-				<FontAwesomeIcon icon={faTwitter} rotation={180} size="2xl" style={{color: '#ffffff'}} className="ms-4" />
+		<main className="relative flex min-h-screen gap-4 bg-gradient-to-tr from-pink-50 to-gray-50 font-sans">
+			<div className="sticky top-0 flex h-screen w-1/4 flex-col justify-between p-2">
+				<FontAwesomeIcon icon={faTwitter} rotation={180} size="2xl" className="ms-4 text-black" />
 				<UserCard username={user.username} />
 			</div>
-			<div className="col-span-2 flex h-full w-full flex-col">
-				<div className="flex h-full w-full flex-col">
+			{/* <div className="flex "> */}
+			<div className="flex w-2/4 flex-col">
+				<div className="flex flex-col">
 					<MakeTweet fetchAllTweet={fetchAllTweet} />
-					{displayTweets}
+					<div className="flex flex-col-reverse gap-4">{displayTweets}</div>
 				</div>
 			</div>
-			<div className="flex h-full w-full flex-col justify-start gap-2 border-s p-2 text-white">
-				<span className="text-lg font-bold">Trends</span>
+			<div className="sticky top-0 flex h-[94vh] w-1/4 flex-col justify-start gap-2 px-2 pt-[6vh]">
 				<TrendsList />
 			</div>
+			{/* </div> */}
 		</main>
 	);
 }

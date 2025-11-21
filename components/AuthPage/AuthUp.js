@@ -38,6 +38,12 @@ export function AuthUpComponent() {
 			});
 	};
 
+	const onKeyPressHandler = (e) => {
+		if (e.key === 'Enter') {
+			handleRegister();
+		}
+	};
+
 	// -------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------
@@ -63,7 +69,7 @@ export function AuthUpComponent() {
 						</div>
 						<div className="grid gap-3">
 							<Label htmlFor="setSignUpPassword">Password</Label>
-							<Input id="setSignUpPassword" type="password" name="password" onChange={(e) => setSignUpPassword(e.target.value)} />
+							<Input id="setSignUpPassword" type="password" name="password" onChange={(e) => setSignUpPassword(e.target.value)} onKeyDown={onKeyPressHandler} />
 						</div>
 					</div>
 					<DialogFooter>

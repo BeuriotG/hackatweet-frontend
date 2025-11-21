@@ -13,11 +13,11 @@ export default function UserCard({username}) {
 	};
 	return (
 		<>
-			<div className="flex w-1/2 content-center items-center gap-4 self-center text-white">
-				<h3 className="">
+			<div className="flex w-full content-center items-center gap-4 self-center pl-4">
+				<h3>
 					Welcome,&nbsp;<span className="font-bold">{username}</span>
 				</h3>
-				<Button variant="default" onClick={() => handleLogout()}>
+				<Button variant="link" className="italic transition-colors duration-200 hover:text-red-600 hover:no-underline" onClick={() => handleLogout()}>
 					Logout
 				</Button>
 			</div>
