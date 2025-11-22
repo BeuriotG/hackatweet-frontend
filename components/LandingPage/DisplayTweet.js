@@ -4,13 +4,35 @@ import {Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTi
 
 import {useSelector} from 'react-redux';
 
+import {useGSAP} from '@gsap/react';
+import gsap from 'gsap';
+// import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
+// import {useRef} from 'react';
+
 import {faHeart, faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export function DisplayTweet(props) {
 	const user = useSelector((state) => state.user.value);
 
-	// console.log(props._id);
+	// console.log(props);
+	// gsap.registerPlugin(ScrollTrigger);
+
+	useGSAP(() => {
+		gsap.fromTo(
+			'.tweets',
+			{
+				y: 100,
+				opacity: 0,
+			},
+			{
+				y: 0,
+				opacity: 1,
+				duration: 0.3,
+				stagger: 0.3,
+			},
+		);
+	}, []);
 
 	const fetchAllTweets = () => {
 		props.fetchAllTweet();
@@ -45,7 +67,7 @@ export function DisplayTweet(props) {
 	};
 
 	return (
-		<Card className="h-[200px] w-full rounded-xl border border-teal-300 bg-gray-400 bg-gradient-to-bl from-pink-50 to-gray-50 hover:border-teal-500">
+		<Card className="tweets h-[200px] w-full rounded-xl border border-teal-300 bg-gray-400 bg-gradient-to-bl from-pink-50 to-gray-50 hover:border-teal-500">
 			<CardHeader className="anim-tweets flex flex-row items-center justify-between">
 				<CardTitle className="align-center">
 					{props.firstname} @{props.username} <span className="text-sm font-extralight text-gray-400">{props.hours}</span>

@@ -4,19 +4,13 @@ import {useEffect, useState} from 'react';
 export default function TrendsList() {
 	const [datatrends, setDatatrends] = useState([]);
 
-	// const datatrends = [
-	// 	{title: '#hackatweet', nbOfTweets: 2},
-	// 	{title: '#lacapsule', nbOfTweets: 1},
-	// 	{title: '#fullstack', nbOfTweets: 5},
-	// ];
-
-	// TODO route
 	useEffect(() => {
 		fetch('http://localhost:3000/tweets')
 			.then((response) => response.json())
 			.then((data) => {
-				// console.log(data);
-				setDatatrends(data.uniqueHashtagsArray);
+				if (data.result) {
+					setDatatrends(data.uniqueHashtagsArray);
+				}
 			});
 	}, []);
 
@@ -26,7 +20,7 @@ export default function TrendsList() {
 		return (
 			<div key={i} className="mb-1 flex flex-col px-2">
 				<span className="italic text-blue-500">{d}</span>
-				{/* <span>{d} Tweets</span> */}
+				{/* <span>{d.numbers} Tweets</span> */}
 			</div>
 		);
 	});
