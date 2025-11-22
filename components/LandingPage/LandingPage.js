@@ -49,7 +49,7 @@ function LandingPage() {
 	});
 
 	const scrollRef = useRef();
-	useEffect(() => {
+	useGSAP(() => {
 		const allTweets = gsap.utils.toArray(scrollRef.current.children);
 
 		console.log('allTweets', allTweets);
