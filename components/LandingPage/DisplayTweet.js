@@ -4,11 +4,6 @@ import {Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTi
 
 import {useSelector} from 'react-redux';
 
-import {useGSAP} from '@gsap/react';
-import gsap from 'gsap';
-// import {ScrollTrigger} from 'gsap/dist/ScrollTrigger';
-// import {useRef} from 'react';
-
 import {faHeart, faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -17,22 +12,6 @@ export function DisplayTweet(props) {
 
 	// console.log(props);
 	// gsap.registerPlugin(ScrollTrigger);
-
-	useGSAP(() => {
-		gsap.fromTo(
-			'.tweets',
-			{
-				y: 100,
-				opacity: 0,
-			},
-			{
-				y: 0,
-				opacity: 1,
-				duration: 0.3,
-				stagger: 0.3,
-			},
-		);
-	}, []);
 
 	const fetchAllTweets = () => {
 		props.fetchAllTweet();
